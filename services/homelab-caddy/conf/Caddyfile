@@ -1,0 +1,19 @@
+{
+    acme_dns cloudflare {file./run/secrets/cloudflare_api_token}
+}
+
+*.forthought.love {
+    @food host food.forthought.love
+    handle @food {
+        respond "Hello from food"
+    }
+
+    @www host www.forthought.love
+    handle @www {
+        redir https://forthought.love{uri}
+    }
+}
+
+forthought.love {
+    respond "Hello from root"
+}

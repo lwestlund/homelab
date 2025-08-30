@@ -1,0 +1,25 @@
+name: homelab
+services:
+  caddy:
+    build: services/homelab-caddy
+    restart: unless-stopped
+    ports:
+      - 80:80
+      - 443:443
+      - 443:443/udp
+    secrets:
+      - cloudflare_api_token
+    volumes:
+      - ./services/caddy/conf:/etc/caddy
+      # I don't have any static content, but if I did, this is where I'd put it.
+      # - ./services/caddy/site:/srv
+      - caddy_data:/data
+      - caddy_config:/config
+
+volumes:
+  caddy_data:
+  caddy_config:
+
+secrets:
+  cloudflare_api_token:
+    file: ./secrets/cloudflare_api_token.txt

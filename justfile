@@ -1,6 +1,24 @@
+dest := '~/homelab'
+
 @default:
     just --list
 
+@deploy-compose host:
+    rsync -avz \
+        docker-compose.yml \
+        ./secrets \
+        ./services \
+        {{host}}:{{dest}}
+
+@deploy-caddy host: (compose-down host 'homelab-caddy') (deploy-compose host) (compose-up host 'homelab-caddy')
+
+@deploy-all host: (compose-down host) (deploy-compose host) (compose-up host)
+
+@compose-down host *service:
+    ssh {{host}} 'cd {{dest}} && docker compose down {{service}}'
+
+@compose-up host *service:
+    ssh {{host}} 'cd {{dest}} && docker compose up -d {{service}}'
 raspberry-install-docker-compose host:
     ssh -t {{host}} 'curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg'
     ssh {{host}} 'sudo chmod a+r /etc/apt/keyrings/docker.gpg'
