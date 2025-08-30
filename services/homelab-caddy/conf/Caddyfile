@@ -12,6 +12,11 @@
     handle @www {
         redir https://forthought.love{uri}
     }
+
+    @obsidian host obsidian.forthought.love
+    handle @obsidian {
+        reverse_proxy couchdb:5984
+    }
 }
 
 forthought.love {

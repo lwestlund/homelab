@@ -31,6 +31,23 @@ services:
       - ./services/ddclient:/config
     restart: unless-stopped
 
+  couchdb:
+    image: couchdb:3.5
+    restart: unless-stopped
+    secrets:
+      - couchdb_user
+      - couchdb_password
+    entrypoint: |
+      sh -c '
+        export COUCHDB_USER=$$(cat /run/secrets/couchdb_user)
+        export COUCHDB_PASSWORD=$$(cat /run/secrets/couchdb_password)
+        exec /docker-entrypoint.sh "$$@"
+      ' --
+    command: ["couchdb"]
+    volumes:
+      - ./services/couchdb/data:/opt/couchdb/data
+      - ./services/couchdb/etc:/opt/couchdb/etc/local.d
+
 volumes:
   caddy_data:
   caddy_config:
@@ -38,3 +55,7 @@ volumes:
 secrets:
   cloudflare_api_token:
     file: ./secrets/cloudflare_api_token.txt
+  couchdb_user:
+    file: ./secrets/couchdb_user.txt
+  couchdb_password:
+    file: ./secrets/couchdb_password.txt
