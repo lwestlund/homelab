@@ -69,3 +69,8 @@ That's why we have the justfile and for more information, read that one!
 ## Caddy
 
 [Caddy](https://caddyserver.com/) is a web server, but I will probably use it mostly to automate setting up TLS certificates for my domain (and subdomains. I am not a web developer, I can brag about having wildcarded subdomains).
+
+## ddclient
+
+[ddclient](https://ddclient.net/) is a tool that automatically updates DNS entries.
+I use it because then I don't have to worry about having a dynamic IP, my DNS will always have the right one.

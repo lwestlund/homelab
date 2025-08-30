@@ -17,6 +17,8 @@ dest := '~/homelab'
 
 @deploy-caddy host: (docker-load host 'homelab-caddy') (compose-down host 'homelab-caddy') (deploy-compose host) (compose-up host 'homelab-caddy')
 
+@deploy-ddclient host: (compose-down host 'ddclient') (deploy-compose host) (compose-up 'ddclient')
+
 @deploy-all host: (docker-load host 'homelab-caddy') (compose-down host) (deploy-compose host) (compose-up host)
 
 @compose-down host *service:

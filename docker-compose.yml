@@ -15,6 +15,21 @@ services:
       # - ./services/caddy/site:/srv
       - caddy_data:/data
       - caddy_config:/config
+    depends_on:
+      - ddclient
+
+  ddclient:
+    image: lscr.io/linuxserver/ddclient:4.0.0
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Stockholm
+      - FILE__CLOUDFLARE_API_TOKEN=/run/secrets/cloudflare_api_token
+    secrets:
+      - cloudflare_api_token
+    volumes:
+      - ./services/ddclient:/config
+    restart: unless-stopped
 
 volumes:
   caddy_data:
