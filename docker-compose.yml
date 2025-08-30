@@ -1,7 +1,7 @@
 name: homelab
 services:
   caddy:
-    build: services/homelab-caddy
+    image: homelab-caddy
     restart: unless-stopped
     ports:
       - 80:80

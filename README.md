@@ -39,6 +39,14 @@ With docker installed, we can start the daemon with
 systemctl start docker
 ```
 
+### Cross-compiling
+
+To speed things up when we deploy, we cross-compile images for the server.
+By default, we can (kind of) only build for the `amd64` platform (because that is my host architecture), but we can add `arm64` by running
+
+``` sh
+just setup-cross-compile
+```
 
 ## Server
 
